@@ -6,8 +6,13 @@
 //
 
 #import "ViewController.h"
+#import "GLSLView.h"
 
 @interface ViewController ()
+
+@property(nonnull,strong)GLSLView *myView;
+
+@property (weak, nonatomic) IBOutlet UISlider *alphaSlider;
 
 @end
 
@@ -15,8 +20,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    self.myView = (GLSLView *)self.view;
+    self.myView.mixAlpha = self.alphaSlider.value;
 }
 
+- (IBAction)alphaChange:(UISlider *)sender {
+    
+    self.myView.mixAlpha = sender.value;
+    
+}
 
 @end
