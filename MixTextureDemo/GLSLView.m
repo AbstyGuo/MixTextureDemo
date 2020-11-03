@@ -7,6 +7,19 @@
 
 #import "GLSLView.h"
 #import <OpenGLES/ES2/gl.h>
+#import "GLSLUtils.h"
+
+//前3个是顶点坐标，后2个是纹理坐标
+GLfloat attrArr[] =
+{
+    0.5f, -0.5f, -1.0f,     1.0f, 1.0f,
+    -0.5f, 0.5f, -1.0f,     0.0f, 0.0f,
+    -0.5f, -0.5f, -1.0f,    0.0f, 1.0f,
+    
+    0.5f, 0.5f, -1.0f,      1.0f, 0.0f,
+    -0.5f, 0.5f, -1.0f,     0.0f, 0.0f,
+    0.5f, -0.5f, -1.0f,     1.0f, 1.0f,
+};
 
 @interface GLSLView ()
 
@@ -16,7 +29,7 @@
 @property (nonatomic,assign) GLuint renderBuffer;
 @property (nonatomic,assign) GLuint frameBuffer;
 
-@property(nonatomic,assign)GLuint myPrograme;
+@property(nonatomic,assign)GLuint myProgram;
 
 @end
 
@@ -127,38 +140,28 @@
     NSLog(@"vertFile:%@",vertFile);
     NSLog(@"fragFile:%@",fragFile);
 
-    self.myPrograme = [self loadShaders:vertFile Withfrag:fragFile];
+    if (self.myProgram) {
+        glDeleteProgram(self.myProgram);
+        self.myProgram = 0;
+    }
     
+    self.myProgram = [GLSLUtils loadProgram:vertFile withFragmentShaderFilepath:fragFile];
+        
     //处理program
-    glLinkProgram(self.myPrograme);
+    glLinkProgram(self.myProgram);
     
     GLint result;
-    glGetProgramiv(self.myPrograme, GL_LINK_STATUS, &result);
+    glGetProgramiv(self.myProgram, GL_LINK_STATUS, &result);
     if (result == GL_FALSE) {
         GLchar message[512];
-        glGetProgramInfoLog(self.myPrograme, sizeof(message), 0, &message[0]);
+        glGetProgramInfoLog(self.myProgram, sizeof(message), 0, &message[0]);
         NSString *messageString = [NSString stringWithUTF8String:message];
         NSLog(@"Program Link Error:%@",messageString);
         return;
     }
     
     NSLog(@"Program Link Success!");
-    glUseProgram(self.myPrograme);
-
-    
-    //6.设置顶点、纹理坐标
-    //前3个是顶点坐标，后2个是纹理坐标
-    GLfloat attrArr[] =
-    {
-        0.5f, -0.5f, -1.0f,     1.0f, 1.0f,
-        -0.5f, 0.5f, -1.0f,     0.0f, 0.0f,
-        -0.5f, -0.5f, -1.0f,    0.0f, 1.0f,
-        
-        0.5f, 0.5f, -1.0f,      1.0f, 0.0f,
-        -0.5f, 0.5f, -1.0f,     0.0f, 0.0f,
-        0.5f, -0.5f, -1.0f,     1.0f, 1.0f,
-    };
-
+    glUseProgram(self.myProgram);
     
     // 处理顶点数据
     GLuint attrBuffer;
@@ -167,32 +170,32 @@
     glBufferData(GL_ARRAY_BUFFER, sizeof(attrArr), attrArr, GL_DYNAMIC_DRAW);
     
     // 获取对应的属性
-    GLuint position = glGetAttribLocation(self.myPrograme, "position");
+    GLuint position = glGetAttribLocation(self.myProgram, "position");
     glEnableVertexAttribArray(position);
     glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat)*5, (GLfloat *)NULL);
     
     // 处理纹理数据
-    GLuint textCoor = glGetAttribLocation(self.myPrograme, "textCoordinate");
+    GLuint textCoor = glGetAttribLocation(self.myProgram, "textCoordinate");
     glEnableVertexAttribArray(textCoor);
     glVertexAttribPointer(textCoor, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat)*5, (GLfloat *)NULL+3);
     
-    GLuint textCoor1 = glGetAttribLocation(self.myPrograme, "textCoordinate1");
+    GLuint textCoor1 = glGetAttribLocation(self.myProgram, "textCoordinate1");
     glEnableVertexAttribArray(textCoor1);
     glVertexAttribPointer(textCoor1, 2, GL_FLOAT, GL_FALSE, sizeof(GLfloat)*5, (float *)NULL + 3);
     
     // 获取alpha变量
-    GLuint alphaIndex = glGetUniformLocation(self.myPrograme, "alpha");
+    GLuint alphaIndex = glGetUniformLocation(self.myProgram, "alpha");
     glUniform1f(alphaIndex, self.mixAlpha);    
     
     // 加载纹理,设置纹理采样器 sampler2D
     [self setupTexture:@"1234" location:0];
-    glUniform1i(glGetUniformLocation(self.myPrograme, "colorMap"), 0);
+    glUniform1i(glGetUniformLocation(self.myProgram, "colorMap"), 0);
 
     
     [self setupTexture:@"2345" location:1];
-    glUniform1i(glGetUniformLocation(self.myPrograme, "mixColor"), 1);
+    glUniform1i(glGetUniformLocation(self.myProgram, "mixColor"), 1);
     
-    // 绘图
+    // 使用顶点数组绘图
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
     //13.从渲染缓存区显示到屏幕上
@@ -277,41 +280,6 @@
     //11.释放spriteData
     free(spriteData);
     return 0;
-}
-
-
-#pragma mark - sharder
--(GLuint)loadShaders:(NSString *)vert Withfrag:(NSString *)frag{
-    // 定义两个着色器对象
-    GLuint vsh,fsh;
-    
-    // 创建program
-    GLuint program = glCreateProgram();
-    
-    // 编译对应的着色器
-    [self compileShader:&vsh type:GL_VERTEX_SHADER file:vert];
-    [self compileShader:&fsh type:GL_FRAGMENT_SHADER file:frag];
-    
-    glAttachShader(program, vsh);
-    glAttachShader(program, fsh);
-    
-    glDeleteShader(vsh);
-    glDeleteShader(fsh);
-    return program;
-}
-
-- (void)compileShader:(GLuint *)shader type:(GLenum)type file:(NSString *)file{
-    
-    // 获取内容
-    NSString * content = [NSString stringWithContentsOfFile:file encoding:NSUTF8StringEncoding error:nil];
-    const GLchar * source = [content UTF8String];
-    
-    //创建sharder
-    *shader = glCreateShader(type);
-    
-    // 绑定shader
-    glShaderSource(*shader, 1, &source, NULL);
-    glCompileShader(*shader);
 }
 
 @end

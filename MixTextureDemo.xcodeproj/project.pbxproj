@@ -18,6 +18,7 @@
 		5E0A2EAB2550032B004C2EB6 /* GLSLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0A2EAA2550032B004C2EB6 /* GLSLView.m */; };
 		5E0A2EB125500D9B004C2EB6 /* shaderf.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5E0A2EAF25500D9B004C2EB6 /* shaderf.fsh */; };
 		5E0A2EB225500D9B004C2EB6 /* shaderv.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5E0A2EB025500D9B004C2EB6 /* shaderv.vsh */; };
+		5E6CB3832550F72200CBE360 /* GLSLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6CB3822550F72200CBE360 /* GLSLUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		5E0A2EAA2550032B004C2EB6 /* GLSLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLSLView.m; sourceTree = "<group>"; };
 		5E0A2EAF25500D9B004C2EB6 /* shaderf.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderf.fsh; sourceTree = "<group>"; };
 		5E0A2EB025500D9B004C2EB6 /* shaderv.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderv.vsh; sourceTree = "<group>"; };
+		5E6CB3812550F72200CBE360 /* GLSLUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLSLUtils.h; sourceTree = "<group>"; };
+		5E6CB3822550F72200CBE360 /* GLSLUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLSLUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,7 @@
 				5E0A2E72255002A9004C2EB6 /* ViewController.m */,
 				5E0A2EA92550032B004C2EB6 /* GLSLView.h */,
 				5E0A2EAA2550032B004C2EB6 /* GLSLView.m */,
+				5E6CB3802550F70700CBE360 /* Utils */,
 				5E0A2EAF25500D9B004C2EB6 /* shaderf.fsh */,
 				5E0A2EB025500D9B004C2EB6 /* shaderv.vsh */,
 				5E0A2E74255002A9004C2EB6 /* Main.storyboard */,
@@ -141,6 +145,15 @@
 				5E0A2E94255002AD004C2EB6 /* Info.plist */,
 			);
 			path = MixTextureDemoUITests;
+			sourceTree = "<group>";
+		};
+		5E6CB3802550F70700CBE360 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5E6CB3812550F72200CBE360 /* GLSLUtils.h */,
+				5E6CB3822550F72200CBE360 /* GLSLUtils.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E6CB3832550F72200CBE360 /* GLSLUtils.m in Sources */,
 				5E0A2E73255002A9004C2EB6 /* ViewController.m in Sources */,
 				5E0A2E6D255002A9004C2EB6 /* AppDelegate.m in Sources */,
 				5E0A2EAB2550032B004C2EB6 /* GLSLView.m in Sources */,
