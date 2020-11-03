@@ -64,6 +64,7 @@
 		5E6CB3822550F72200CBE360 /* GLSLUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLSLUtils.m; sourceTree = "<group>"; };
 		5E6CB38A255104F800CBE360 /* GLSLIndexView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLSLIndexView.h; sourceTree = "<group>"; };
 		5E6CB38B255104F800CBE360 /* GLSLIndexView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLSLIndexView.m; sourceTree = "<group>"; };
+		5E7CE44A25513E5E00492C74 /* annotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = annotation.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +121,7 @@
 				5E0A2E72255002A9004C2EB6 /* ViewController.m */,
 				5E0A2EA92550032B004C2EB6 /* GLSLView.h */,
 				5E0A2EAA2550032B004C2EB6 /* GLSLView.m */,
+				5E7CE44A25513E5E00492C74 /* annotation.h */,
 				5E6CB38A255104F800CBE360 /* GLSLIndexView.h */,
 				5E6CB38B255104F800CBE360 /* GLSLIndexView.m */,
 				5E6CB3802550F70700CBE360 /* Utils */,

@@ -37,12 +37,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 +(GLuint)loadProgram:(NSString *)vertexShaderFilepath withFragmentShaderFilepath:(NSString *)fragmentShaderFilepath;
 
-///**
-// 使用图片创建纹理
-// @param image 图片
-// @return 获取的纹理id
-// */
-//+ (GLuint)createTextureWithImage:(UIImage *)image;
+/**
+ 使用图片创建纹理
+ @param image 图片
+ @return 获取的纹理id
+ */
++ (GLuint)createTextureWithImage:(UIImage *)image;
 
 @end
 
