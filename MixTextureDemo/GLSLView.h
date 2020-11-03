@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GLSLView : UIView
 
-@property (nonatomic,assign) CGFloat mixAlpha;
+@property (weak, nonatomic) IBOutlet UISlider *alphaSlider;
 
 @end
 

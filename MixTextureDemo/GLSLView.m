@@ -31,12 +31,19 @@ GLfloat attrArr[] =
 
 @property(nonatomic,assign)GLuint myProgram;
 
+@property (nonatomic,assign) CGFloat mixAlpha;
+
 @end
 
 @implementation GLSLView
 
-- (void)setMixAlpha:(CGFloat)mixAlpha{
-    _mixAlpha = mixAlpha;
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    _mixAlpha = 0.5;
+}
+
+- (IBAction)alphaChange:(UISlider *)sender {
+    _mixAlpha = sender.value;
     [self drawLayer];
 }
 
@@ -191,7 +198,6 @@ GLfloat attrArr[] =
     [self setupTexture:@"1234" location:0];
     glUniform1i(glGetUniformLocation(self.myProgram, "colorMap"), 0);
 
-    
     [self setupTexture:@"2345" location:1];
     glUniform1i(glGetUniformLocation(self.myProgram, "mixColor"), 1);
     

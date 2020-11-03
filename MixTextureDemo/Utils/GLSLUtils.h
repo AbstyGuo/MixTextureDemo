@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #include <OpenGLES/ES2/gl.h>
+#import <GLKit/GLKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,6 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
  @return 返回获取的program的索引
  */
 +(GLuint)loadProgram:(NSString *)vertexShaderFilepath withFragmentShaderFilepath:(NSString *)fragmentShaderFilepath;
+
+///**
+// 使用图片创建纹理
+// @param image 图片
+// @return 获取的纹理id
+// */
+//+ (GLuint)createTextureWithImage:(UIImage *)image;
 
 @end
 

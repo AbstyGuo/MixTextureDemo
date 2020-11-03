@@ -115,8 +115,4 @@
     
     return programHandle;
 }
-
-
-
-
 @end
